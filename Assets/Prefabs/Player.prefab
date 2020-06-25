@@ -277,6 +277,8 @@ MonoBehaviour:
   - {fileID: 4877866713183444994}
   - {fileID: -4306826714158084682}
   remoteLayerName: RemotePlayer
+  playerUIPrefab: {fileID: 2405735713036629586, guid: c62dec515862f1f41a2af74dd6ef4b8a,
+    type: 3}
 --- !u!114 &-4306826714158084682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,12 +293,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon:
     name: Glock
-    damage: 10
+    damage: 40
     range: 100
   cam: {fileID: 4877866713183445021}
   mask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1591
 --- !u!114 &4238930413415977952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,6 +312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 4877866713183445021}
+  cameraRotationLimit: 85
 --- !u!114 &3992310340534964688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,6 +343,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  disableOnDeath:
+  - {fileID: 3992310340534964688}
+  - {fileID: -4306826714158084682}
 --- !u!153 &-6939344410372059586
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -351,7 +357,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_ConnectedAnchor: {x: 0, y: 1, z: 0}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 2
