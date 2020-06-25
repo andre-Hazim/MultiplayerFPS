@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(ConfigurableJoint))]
 [RequireComponent(typeof(PlayerMotor))]
@@ -11,6 +12,17 @@ public class PlayerController : MonoBehaviour
 	private float lookSensitivity = 3f;
 	[SerializeField]
 	private float thrusterForce = 1000f;
+
+	[SerializeField]
+	private float thrusterFeulBurnSpeed = 1f;
+	[SerializeField]
+	private float thrustFeulRegenSpeed = 0.3f;
+	private float thrusterFeulAmount = 1f;
+
+	public float GetThrusterFeulAmount()
+    {
+		return thrusterFeulAmount;
+    }
 
 	[Header("Spring settings")]
 	[SerializeField]
@@ -32,6 +44,15 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
+		RaycastHit _hit;
+		if(Physics.Raycast(transform.position, Vector3.down, out _hit, 100f))
+        {
+			joint.targetPosition = new Vector3(0f, -_hit.point.y, 0f);
+        }
+        else
+        {
+			joint.targetPosition = new Vector3(0f, 0f, 0f);
+        }
 		//Calculate movement velocity as a 3D vector
 		float _xMov = Input.GetAxisRaw("Horizontal");
 		float _zMov = Input.GetAxisRaw("Vertical");
@@ -62,15 +83,27 @@ public class PlayerController : MonoBehaviour
 		motor.RotateCamera(_cameraRotationX);
 
 		Vector3 _thrusterForce = Vector3.zero;
-		//Calcualte thruster force
-		if (Input.GetButton("Jump"))
+        //Calcualte thruster force
+        if (Input.GetButton("Jump") && thrusterFeulAmount >0f)
         {
-			_thrusterForce = Vector3.up * thrusterForce;
-			SetJointSettings(0f);
+			thrusterFeulAmount -= thrusterFeulBurnSpeed * Time.deltaTime;
+			if(thrusterFeulAmount>= 0.01f)
+            {
+				_thrusterForce = Vector3.up * thrusterForce;
+				SetJointSettings(0f);
+			}
         }
         else
         {
-			SetJointSettings(jointSpring);
+			thrusterFeulAmount += thrustFeulRegenSpeed * Time.deltaTime;
+            SetJointSettings(jointSpring);
+        }
+		thrusterFeulAmount = Mathf.Clamp(thrusterFeulAmount, 0f, 1f);
+
+        if (Input.GetButtonDown("Jump"))
+        {
+			motor.Jump();
+
         }
 		// Apply the thruster force 
 		motor.ApplyThruster(_thrusterForce);

@@ -312,6 +312,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 4877866713183445021}
+  gravity: -19.62
+  jumpHeight: 2
+  groundCheck: {fileID: 4877866712559189951}
+  groundDistance: 0.4
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 512
   cameraRotationLimit: 85
 --- !u!114 &3992310340534964688
 MonoBehaviour:
@@ -404,7 +411,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_YDrive:
     serializedVersion: 3
-    positionSpring: 20
+    positionSpring: 0
     positionDamper: 0
     maximumForce: 40
   m_ZDrive:
@@ -450,6 +457,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4877866712559189951}
+  - component: {fileID: 8376947594594650826}
   m_Layer: 8
   m_Name: GameObject
   m_TagString: Untagged
@@ -465,12 +473,28 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4877866712559189948}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.451, z: 0}
+  m_LocalPosition: {x: 0, y: -0.843, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4877866712486347403}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &8376947594594650826
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4877866712559189948}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4877866713095076582
 GameObject:
   m_ObjectHideFlags: 0

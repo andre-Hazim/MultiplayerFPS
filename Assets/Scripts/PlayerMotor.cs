@@ -13,6 +13,17 @@ public class PlayerMotor : MonoBehaviour
 	private float currentCameraRotaionX = 0f;
 	private Vector3 thrusterForce = Vector3.zero;
 
+
+	public float gravity = -19.62f;
+	public float jumpHeight = 2f;
+
+	public Transform groundCheck;
+	public float groundDistance = 1f;
+	public LayerMask groundMask;
+
+	
+	bool isGrounded;
+
 	[SerializeField]
 	private float cameraRotationLimit = 85f;
 
@@ -50,8 +61,24 @@ public class PlayerMotor : MonoBehaviour
 	// Run every physics iteration
 	void FixedUpdate()
 	{
+		isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+		
 		PerformMovement();
 		PerformRotation();
+	}
+
+	public void Jump()
+    {
+		
+		Debug.Log(isGrounded.ToString());
+		
+        if (isGrounded)
+        {
+			rb.AddForce(Vector3.up * 150,ForceMode.Acceleration);
+			rb.AddForce(Vector3.down * 50, ForceMode.Acceleration);
+
+		}
+		
 	}
 
 	//Perform movement based on velocity variable
